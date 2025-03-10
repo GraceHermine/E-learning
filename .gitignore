@@ -1,0 +1,44 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+db.sqlite3
+
+# Environnements virtuels
+venv/
+env/
+ENV/
+venv.bak/
+env.bak/
+
+# Fichiers de configuration locaux
+*.env
+*.local
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Fichiers temporaires
+*.swp
+*.swo
+
+# Cache de Django
+/staticfiles/
+/media/
+
+# Fichiers de migration
+*/migrations/*
