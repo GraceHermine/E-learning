@@ -1,19 +1,18 @@
-from django.db import models
+# IIT/views.py
 from django.shortcuts import render
 
-# Create your views here.
-class Utilisateur(models.Model):
+def about(request):
+    return render(request, 'about.html')  # Vue pour la page "about"
 
-    class Meta:
-        verbose_name = "Utilisateur"
-        verbose_name_plural = "Utilisateurs"
+def contact(request):
+    return render(request, 'contact.html')  # Vue pour la page "contact"
 
-    nom = models.CharField(max_length=255)
-    prenom = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    telephone = models.CharField(max_length=20)
-    created_at = models.DateTimeField(auto_now_add=True)  
-    updated_at = models.DateTimeField(auto_now=True)  
+def courses(request):
+    return render(request, 'courses.html')
 
-    def _str_(self):
-        return f"{self.nom} {self.prenom}"
+def team(request):
+    return render(request, 'team.html')
+
+def testimonial(request):
+    return render(request, 'testimonial.html')
+
