@@ -14,7 +14,7 @@ class Etudiant(User):
     specialite = models.CharField(max_length=100) 
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)  
 
     def __str__(self):
@@ -30,7 +30,7 @@ class Forum(models.Model):
     date_creation = models.DateField()
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class Reclamation(models.Model):
     statut = models.CharField(max_length=50, choices=[("En attente", "En attente"), ("Traité", "Traité")])
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Cours(models.Model):
     credits = models.PositiveIntegerField()  # Nombre de crédits
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -83,7 +83,7 @@ class Salle(models.Model):
     type_salle = models.CharField(max_length=50)  # Type de la salle
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -103,7 +103,7 @@ class Evaluation(models.Model):
     duree = models.PositiveIntegerField()  # Durée de l'évaluation
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -115,7 +115,7 @@ class Note(models.Model):
     note = models.FloatField()  # Note de l'étudiant
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
