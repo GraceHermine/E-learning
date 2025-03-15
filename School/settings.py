@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'IIT.apps.IitConfig'
+    'IIT.apps.IitConfig',
+    'administration.apps.AdministrationConfig',
 ]
 
 MIDDLEWARE = [
