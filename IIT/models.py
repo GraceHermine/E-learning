@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
-    
+User = get_user_model()
 class Etudiant(User):
 
     class Meta:
@@ -63,6 +64,10 @@ class Cours(models.Model):
         ('Group 3', 'Group 3'),
         # Ajoutez d'autres groupes si nécessaire
     ]
+
+    class Meta:
+        verbose_name = "Cours"
+        verbose_name_plural = "Cours"
 
     group = models.CharField(max_length=50, choices=GROUP_CHOICES)
     heures = models.PositiveIntegerField()  # Nombre d'heures
