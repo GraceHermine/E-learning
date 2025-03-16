@@ -4,60 +4,45 @@
 <div class="container mt-5">
     <div class="row g-4">
         <!-- Départements -->
-        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="service-item text-center pt-3 activity-card">
-                <div class="p-4">
-                    <i class="fa fa-3x fa-university text-primary mb-4"></i>
-                    <h5 class="mb-3">Départements</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for departement in departements %}
-                            <li class="list-group-item bg-primary text-white">{{ departement.nom }} ({{ departement.code }}) - Budget: {{ departement.budget }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+        {% for departement in departements %}
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <a href="{% url 'departement_detail' departement.id %}" class="service-item text-center pt-3 activity-card">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-university text-primary mb-4"></i>
+                        <h5 class="mb-3">{{ departement.nom }}</h5>
+                        <p>Code: {{ departement.code }}</p>
+                        <p>Budget: {{ departement.budget }}</p>
+                    </div>
+                </a>
             </div>
-        </div>
+        {% endfor %}
 
         <!-- Clubs -->
-        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="service-item text-center pt-3 activity-card">
-                <div class="p-4">
-                    <i class="fa fa-3x fa-users text-primary mb-4"></i>
-                    <h5 class="mb-3">Clubs</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for club in clubs %}
-                            <li class="list-group-item bg-primary text-white">{{ club.nom }} - {{ club.description }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+        {% for club in clubs %}
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <a href="{% url 'club_detail' club.id %}" class="service-item text-center pt-3 activity-card">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-users text-primary mb-4"></i>
+                        <h5 class="mb-3">{{ club.nom }}</h5>
+                        <p>{{ club.description }}</p>
+                    </div>
+                </a>
             </div>
-        </div>
+        {% endfor %}
 
         <!-- Événements -->
-        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-            <div class="service-item text-center pt-3 activity-card">
-                <div class="p-4">
-                    <i class="fa fa-3x fa-calendar-alt text-primary mb-4"></i>
-                    <h5 class="mb-3">Événements</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for evenement in evenements %}
-                            <li class="list-group-item bg-primary text-white">{{ evenement.nom }} - {{ evenement.date }} - {{ evenement.lieu }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+        {% for evenement in evenements %}
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <a href="{% url 'evenement_detail' evenement.id %}" class="service-item text-center pt-3 activity-card">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-calendar-alt text-primary mb-4"></i>
+                        <h5 class="mb-3">{{ evenement.nom }}</h5>
+                        <p>Date: {{ evenement.date }}</p>
+                        <p>Lieu: {{ evenement.lieu }}</p>
+                    </div>
+                </a>
             </div>
-        </div>
-
-        <!-- Autre activité (exemple) -->
-        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-            <div class="service-item text-center pt-3 activity-card">
-                <div class="p-4">
-                    <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                    <h5 class="mb-3">Autre Activité</h5>
-                    <p>Description de l'autre activité.</p>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
