@@ -147,18 +147,20 @@ _register(Salle, SalleAdmin)
 
 # Admin pour le modèle Evaluation
 class EvaluationAdmin(admin.ModelAdmin):
-    list_display = ('type_evaluation', 'date', 'created_at')
+    list_display = ('cours', 'type_evaluation', 'date', 'created_at')  # Affichage du cours
     list_display_links = ['type_evaluation']
-    list_filter = ('type_evaluation',)
-    search_fields = ('type_evaluation',)
-    ordering = ['type_evaluation', 'date']
+    list_filter = ('type_evaluation', 'cours')  # Ajout du filtre par cours
+    search_fields = ('type_evaluation', 'cours__titre')  # Recherche par cours
+    ordering = ['cours', 'type_evaluation', 'date']
     list_per_page = 10
     date_hierarchy = 'created_at'
+    
+    # Mise à jour des champs affichés dans le formulaire d'édition
     fieldsets = [
         (
             'Infos',
             {
-                'fields': ['type_evaluation', 'date'],
+                'fields': ['cours', 'type_evaluation', 'date', 'duree'],  # Ajout du champ 'cours'
             },
         ),
         (
@@ -168,23 +170,24 @@ class EvaluationAdmin(admin.ModelAdmin):
             }
         ),
     ]
-
-_register(Evaluation, EvaluationAdmin)
+    
+# Enregistrer l'administration personnalisée
+admin.site.register(Evaluation, EvaluationAdmin)
 
 # Admin pour le modèle Note
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('etudiant', 'note', 'created_at')
+    list_display = ('etudiant', 'valeur', 'created_at')
     list_display_links = ['etudiant']
-    list_filter = ('note',)
+    list_filter = ('valeur',)
     search_fields = ('etudiant',)
-    ordering = ['etudiant', 'note']
+    ordering = ['etudiant', 'valeur']
     list_per_page = 10
     date_hierarchy = 'created_at'
     fieldsets = [
         (
             'Infos',
             {
-                'fields': ['etudiant', 'note'],
+                'fields': ['etudiant', 'valeur'],
             },
         ),
         (

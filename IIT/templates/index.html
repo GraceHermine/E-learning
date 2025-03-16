@@ -1,73 +1,120 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container-fluid mt-4">
     <div class="row">
-        <!-- Profil étudiant -->
-        <div class="col-md-3">
-            <div class="card shadow-sm rounded-lg border-light">
-                <img src="{{ user.profile_picture.url }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Profile Picture">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-dark">{{ user.username }}</h5>
-                    <p class="card-text text-muted">{{ user.email }}</p>
-                    <p class="text-muted mb-0"><strong>Étudiant</strong></p>
-                </div>
+        <!-- Barre latérale -->
+        <nav class="col-md-3 bg-light sidebar py-4 rounded-lg shadow-sm">
+            <div class="text-center">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Photo de profil">
+                {% else %}
+                    <img src="https://via.placeholder.com/120" class="rounded-circle mb-3" alt="Photo de profil">
+                {% endif %}
+                <h5 class="text-dark">{{ user.username }}</h5>
+                <p class="text-muted">{{ user.email }}</p>
+                <p class="text-primary"><strong>Étudiant</strong></p>
             </div>
-        </div>
-        
+            <hr>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="{% url 'cours' %}" class="nav-link text-dark">📚 Mes Cours</a></li>
+                <li class="nav-item"><a href="{% url 'about' %}" class="nav-link text-dark">📝 Évaluations</a></li>
+                <li class="nav-item"><a href="{% url 'forum' %}" class="nav-link text-dark">💬 Forums</a></li>
+                <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link text-dark">📩 Messages</a></li>
+            </ul>
+        </nav>
+
         <!-- Contenu principal -->
-        <div class="col-md-9">
+        <main class="col-md-9">
             <div class="row">
-                <!-- Cours récents -->
-                <div class="col-md-6">
-                    <div class="card shadow-sm rounded-lg border-light">
-                        <div class="container mt-5">
-                            <h1>Liste des Cours</h1>
+                <!-- Cours -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-primary text-white">📚 Mes Cours</div>
+                        <div class="card-body">
                             {% if courses %}
-                                <ul>
+                                <ul class="list-group">
                                     {% for course in courses %}
-                                        <li>{{ course.title }}</li> <!-- Assure-toi que 'title' est un champ de ton modèle -->
+                                        <li class="list-group-item">
+                                            {{ course.titre }} 
+                                            <span class="badge bg-secondary">{{ course.credits }} crédits</span>
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                <p>Aucun cours disponible.</p>
+                                <p class="text-muted">Aucun cours disponible.</p>
                             {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <!-- Messages récents -->
-                <div class="col-md-6">
-                    <div class="card shadow-sm rounded-lg border-light">
-                        <div class="card-header bg-warning text-dark">Messages Récents</div>
-                        
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-warning text-dark">📩 Messages Récents</div>
+                        <div class="card-body">
+                            {% if messages %}
+                                <ul class="list-group">
+                                    {% for message in messages %}
+                                        <li class="list-group-item">
+                                            {{ message.message }} 
+                                            <small class="text-muted">({{ message.created_at }})</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucun message pour l'instant.</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-3">
-                <!-- Forum consulté récemment -->
-                <div class="col-md-6">
-                    <div class="card shadow-sm rounded-lg border-light">
-                        <div class="card-header bg-success text-white">Forum Consulté</div>
-                        <ul class="list-group list-group-flush">
-                           
-                        </ul>
+            <div class="row">
+                <!-- Forums -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-success text-white">💬 Forums Consultés</div>
+                        <div class="card-body">
+                            {% if forums %}
+                                <ul class="list-group">
+                                    {% for forum in forums %}
+                                        <li class="list-group-item">
+                                            {{ forum.titre }} 
+                                            <small class="text-muted">Créé le {{ forum.date_creation }}</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Pas encore de forum consulté.</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 
-                <!-- Évaluations récentes et à venir -->
-                <div class="col-md-6">
-                    <div class="card shadow-sm rounded-lg border-light">
-                        <div class="card-header bg-dark text-white">Évaluations</div>
-                        
+                <!-- Évaluations -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-dark text-white">📊 Évaluations</div>
+                        <div class="card-body">
+                            {% if evaluations %}
+                                <ul class="list-group">
+                                    {% for eval in evaluations %}
+                                        <li class="list-group-item">
+                                            {{ eval.type_evaluation }} - {{ eval.cours.titre }} 
+                                            <small class="text-muted">Le {{ eval.date }} (Durée : {{ eval.duree }} min)</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucune évaluation à venir.</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </div>
-
-
 
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-
+from administration.models import EnseignantB
 
 User = get_user_model()
 class Etudiant(User):
@@ -10,6 +10,9 @@ class Etudiant(User):
         verbose_name = "Etudiant"
         verbose_name_plural = "Etudiants"
 
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
+    nationalite = models.CharField(max_length=50)
     matricule = models.CharField(max_length=50, unique=True)
     niveau = models.CharField(max_length=50)
     specialite = models.CharField(max_length=100)
@@ -47,6 +50,7 @@ class Reclamation(models.Model):
 
 
     etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
+    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
     sujet = models.CharField(max_length=255)
     description = models.TextField()
     statut = models.CharField(max_length=50, choices=[("En attente", "En attente"), ("Traité", "Traité")])
@@ -76,6 +80,11 @@ class Cours(models.Model):
     titre = models.CharField(max_length=200)  # Titre du cours
     description = models.TextField()  # Description du cours
     credits = models.PositiveIntegerField()  # Nombre de crédits
+    video_url = models.URLField(blank=True, null=True)   # Lien YouTube
+    contenu = models.TextField()
+    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
+    
+    
 
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=False)
@@ -83,6 +92,7 @@ class Cours(models.Model):
 
     def __str__(self):
         return self.titre
+
 
 class Salle(models.Model):
     nom = models.CharField(max_length=100)  # Nom de la salle
@@ -107,7 +117,7 @@ class Evaluation(models.Model):
     cours = models.ForeignKey(Cours, on_delete=models.CASCADE)  # Lien avec le modèle Cours
     type_evaluation = models.CharField(max_length=50, choices=TYPE_EVALUATION_CHOICES)
     date = models.DateField()  # Date de l'évaluation
-    duree = models.PositiveIntegerField()  # Durée de l'évaluation
+    duree = models.PositiveIntegerField(default=60)  # Durée de l'évaluation
 
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=False)
@@ -117,9 +127,14 @@ class Evaluation(models.Model):
         return f"{self.type_evaluation} - {self.date}"
 
 class Note(models.Model):
+
+    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
+    cour = models.ForeignKey(Cours, on_delete=models.CASCADE)
     evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)  # Lien avec le modèle Evaluation
     etudiant = models.CharField(max_length=100)  # Nom de l'étudiant
-    note = models.FloatField()  # Note de l'étudiant
+    
+    valeur = models.DecimalField(max_digits=5, decimal_places=2)
+    remarque = models.TextField(blank=True, null=True)
 
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=False)
