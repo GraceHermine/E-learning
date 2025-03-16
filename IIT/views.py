@@ -17,3 +17,7 @@ class Utilisateur(models.Model):
 
     def _str_(self):
         return f"{self.nom} {self.prenom}"
+
+def index(request):
+    return render(request,'index.html')
+
