@@ -9,6 +9,9 @@ def error(request):
 
     }
 
+
+
+
     return render(request, '404.html', datas)
 
 def contacts(request):
@@ -62,3 +65,4 @@ def chat_view(request):
 
     messages = ChatMessage.objects.all().order_by('-created_at')
     return render(request, 'chat.html', {'messages': messages})
+
