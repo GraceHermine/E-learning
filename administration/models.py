@@ -111,26 +111,6 @@ class EnseignantB(models.Model):
 
 
 
-# Modèle Bibliothécaire lié à User
-class Bibliotheque(models.Model):
-    # user = models.ForeignKey(User, on_delete= models.SET_NULL, null=True)
-    adresse = models.CharField(max_length=255)
-    nom = models.CharField(max_length=255)
-    telephone = models.CharField(max_length=255)
-    statut = models.CharField(default="Personnel de l'université", max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = "Bibliothécaire"
-        verbose_name_plural = "Bibliothécaires"
-
-    def __str__(self):
-          return self.nom
-    # def __str__(self):
-        # return self.user.username if self.user else "Bibliothécaire sans compte"
-
-# Modèle Livre
 class Livre(models.Model):
     isbn = models.CharField(max_length=13, unique=True)
     titre = models.CharField(max_length=255)
@@ -165,6 +145,52 @@ class Livre(models.Model):
 
     def __str__(self):
         return self.titre
+
+
+class Bibliotheque(models.Model):
+    nom = models.CharField(max_length=255, verbose_name="Nom de la bibliothèque")
+    responsable = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name="Bibliothécaire responsable")
+    livres = models.ManyToManyField(Livre, related_name='bibliotheques', verbose_name="Livres")
+    adresse = models.CharField(max_length=255, verbose_name="Adresse")
+    telephone = models.CharField(max_length=255, verbose_name="Téléphone")
+    statut = models.BooleanField(default=True, verbose_name="Active")
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Bibliothèque"
+        verbose_name_plural = "Bibliothèques"
+
+    def __str__(self):
+        return self.nom
+
+    def get_livres_disponibles(self):
+        return self.livres.filter(statut=True)
+
+    def get_livres_par_categorie(self, categorie):
+        return self.livres.filter(categorie=categorie)
+
+
+# Modèle Bibliothécaire
+class Bibliothcaire(models.Model):
+    adresse = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255)
+    telephone = models.CharField(max_length=255)
+    statut = models.CharField(default="Personnel de l'université", max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Bibliothécaire"
+        verbose_name_plural = "Bibliothécaires"
+
+    def __str__(self):
+          return self.nom
+    # def __str__(self):
+        # return self.user.username if self.user else "Bibliothécaire sans compte"
+
+# Modèle Livre
+
 
 # Modèle Réservation
 class Reservation(models.Model):
