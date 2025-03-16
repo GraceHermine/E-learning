@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
-    
+User = get_user_model()
 class Etudiant(User):
 
     class Meta:
@@ -11,7 +12,9 @@ class Etudiant(User):
 
     matricule = models.CharField(max_length=50, unique=True)
     niveau = models.CharField(max_length=50)
-    specialite = models.CharField(max_length=100) 
+    specialite = models.CharField(max_length=100)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+ 
 
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=False)
@@ -48,7 +51,7 @@ class Reclamation(models.Model):
     description = models.TextField()
     statut = models.CharField(max_length=50, choices=[("En attente", "En attente"), ("Traité", "Traité")])
 
-    statut = models.BooleanField(default=True)
+    
     created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
 
@@ -63,6 +66,10 @@ class Cours(models.Model):
         ('Group 3', 'Group 3'),
         # Ajoutez d'autres groupes si nécessaire
     ]
+
+    class Meta:
+        verbose_name = "Cours"
+        verbose_name_plural = "Cours"
 
     group = models.CharField(max_length=50, choices=GROUP_CHOICES)
     heures = models.PositiveIntegerField()  # Nombre d'heures
@@ -120,3 +127,16 @@ class Note(models.Model):
 
     def __str__(self):
         return f"{self.etudiant} - {self.note}"
+    
+
+
+class ChatMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.user.username} at {self.created_at}"
+    
+
+    
