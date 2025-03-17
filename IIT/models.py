@@ -43,7 +43,9 @@ class Forum(models.Model):
     etudiants = models.ManyToManyField(Etudiant, related_name='forums_etudiants')
     administrateurs = models.ManyToManyField(User, related_name='forums_admin', limit_choices_to={'is_staff': True})
 
-    def _str_(self):
+
+    def __str__(self):
+
         return self.titre
 
 class Reclamation(models.Model):
@@ -158,5 +160,8 @@ class Message(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
+
+    def __str__(self):
         return f"Message de {self.user.username} sur {self.forum.titre}"
+    
+

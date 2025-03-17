@@ -31,6 +31,7 @@ User = get_user_model()
 #         return self.nom
 
 class EnseignantB(models.Model):
+
     class Meta:
          verbose_name = "Enseignant"
          verbose_name_plural = "Enseignants"
@@ -59,6 +60,7 @@ class EnseignantB(models.Model):
     departement = models.CharField(max_length=50, choices=SPECIALITE_CHOICES)
 #  
     created_at = models.DateTimeField(auto_now_add=True)
+    
     def save(self, *args, **kwargs):
         if not self.user:
             self.user = kwargs.get('request').user  # Assign the currently logged-in user
@@ -272,3 +274,4 @@ class Administrateur(models.Model):
 
     def __str__(self):
         return f"{self.utilisateur.username} - {self.role}"
+

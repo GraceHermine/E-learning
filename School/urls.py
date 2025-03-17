@@ -22,10 +22,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('IIT.urls')),
 <<<<<<< HEAD
+<<<<<<< HEAD
     path('administration/', include('administration.urls')),
 =======
     path('administration', include('administration.urls')),
     path('api/', include('API.urls')),
     path('activitees/',include('activitees.urls')),
 >>>>>>> d908e0825373ee22157592428c5789a66a55e449
+=======
+
+    path('administration', include('administration.urls')),
+    path('api/', include('API.urls')),
+    path('activitees/',include('activitees.urls')),
+
+>>>>>>> f5c70310d4dff241b61767337ce98a2a0f93d3d7
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

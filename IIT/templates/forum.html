@@ -1,19 +1,23 @@
 {% extends 'base/base.html' %}
+
 {% block content %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Créer un Nouveau Sujet</h2>
+    <h2 class="text-center mb-4">Liste des Forums</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_titre">Titre du Forum</label>
-            {{ form.titre }}
-        </div>
-        <div class="form-group">
-            <label for="id_date_creation">Date de création</label>
-            {{ form.date_creation }}
-        </div>
-        <button type="submit" class="btn btn-success">Créer le sujet</button>
-    </form>
+    <!-- Vérifie s'il y a des forums à afficher -->
+    {% if forums %}
+        <ul class="list-group">
+            {% for forum in forums %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <strong>{{ forum.titre }}</strong>
+                    <span class="text-muted">{{ forum.date_creation }}</span>
+                    <!-- Lien vers la page du forum_detail -->
+                    <a href="{% url 'details_forum' forum.id %}" class="btn btn-primary btn-sm">Voir le Forum</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun forum n'a été créé pour le moment.</p>
+    {% endif %}
 </div>
 {% endblock %}
