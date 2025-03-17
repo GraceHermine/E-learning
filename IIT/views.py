@@ -71,6 +71,31 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         matricule = request.POST['matricule']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             # return redirect('index')
+#             if user.matricule.startswith('EtuIIT-'):
+#                 return redirect('StudentHome')
+#             elif user.matricule.startswith('EnsIIT-'):
+#                 return redirect('enseignanthomepage')
+#             else:
+#                 return redirect('index')
+#         else:
+#             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
+#     return render(request, 'login.html')
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from administration.models import EnseignantB
+from .models import Etudiant
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -78,6 +103,20 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            try:
+                etudiant = Etudiant.objects.get(user=user)
+                if etudiant.matricule.startswith('EtuIIT-'):
+                    return redirect('StudentHome')
+            except Etudiant.DoesNotExist:
+                pass
+
+            try:
+                enseignant = EnseignantB.objects.get(user=user)
+                if enseignant.matricule.startswith('EnsIIT-'):
+                    return redirect('enseignanthomepage')
+            except EnseignantB.DoesNotExist:
+                pass
+
             return redirect('index')
         else:
             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
@@ -86,3 +125,19 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+
+#  if user is not None:
+#             login(request, user)
+#             if user.username.startswith('EtuIIT-'):
+#                 return redirect('StudentHome')
+#             elif user.username.startswith('EnsIIT-'):
+#                 return redirect('ProfessorHome')
+#             else:
+#                 return redirect('index')
+#         else:
+#             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')

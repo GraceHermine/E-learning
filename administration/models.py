@@ -35,11 +35,12 @@ class EnseignantB(models.Model):
          verbose_name = "Enseignant"
          verbose_name_plural = "Enseignants"
     user = models.OneToOneField(User, on_delete=models.CASCADE,  related_name='enseignant_profile')
-    matricule = models.CharField(max_length=255, unique=True, default='IIT-')
+    matricule = models.CharField(max_length=255, unique=True, default='EnsIIT-')
     nom = models.CharField(verbose_name="Nom", max_length=255)
     prenom = models.CharField(verbose_name="Prénom", max_length=255)
     email = models.EmailField(verbose_name="Email", max_length=255, default="example@email.com")
     telephone = models.CharField(verbose_name="Téléphone", max_length=255)
+    statut = models.BooleanField(default=True),
     GRADE_CHOICES = [
         ('assistant', 'Assistant'),
         ('maitre_assistant', 'Maître Assistant'),

@@ -40,7 +40,7 @@ admin.site.register(EmploiDuTemps, EmploiDuTempsAdmin)
 
 class EnseignantAdmin(admin.ModelAdmin):
 
-    list_display = ('user', 'matricule', 'nom', 'prenom', 'email', 'telephone', 'grade', 'departement', 'created_at')
+    list_display = ('user', 'matricule', 'nom', 'prenom', 'email', 'telephone', 'grade', 'departement', 'created_at', 'statut')
 
     list_display_links = ['nom',]
 

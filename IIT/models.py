@@ -10,10 +10,9 @@ class Etudiant(User):
         verbose_name = "Etudiant"
         verbose_name_plural = "Etudiants"
 
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='etudiant_profile')
     nationalite = models.CharField(max_length=50)
-    matricule = models.CharField(max_length=50, unique=True)
+    matricule = models.CharField(max_length=50, unique=True,default= "EtuIIT-")
     niveau = models.CharField(max_length=50)
     specialite = models.CharField(max_length=100)
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)

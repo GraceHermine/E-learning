@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import Etudiant, Forum, Reclamation, Cours, Salle, Evaluation, Note,ChatMessage
+from django.contrib.auth import get_user_model
+def _register(model, admin_class):
+    admin.site.register(model, admin_class)
 
-# Admin pour le modèle Etudiant
 class EtudiantAdmin(admin.ModelAdmin):
     list_display = ('matricule', 'specialite', 'created_at')
     list_display_links = ['matricule',]
@@ -14,21 +16,14 @@ class EtudiantAdmin(admin.ModelAdmin):
         (
             'Infos',
             {
-                'fields': ['matricule', 'niveau', 'specialite'],
+                'fields': ['user', 'matricule', 'niveau', 'specialite', 'nationalite', 'profile_picture'],
+                'description': 'Ensure that the username for each user is unique to avoid UNIQUE constraint errors.',
             },
-        ),
-        (
-            'Standards',
-            {
-                'fields': ['created_at', ]
-            }
         ),
     ]
 
-def _register(model, admin_class):
-    admin.site.register(model, admin_class)
-
 _register(Etudiant, EtudiantAdmin)
+
 
 # Admin pour le modèle Forum
 class ForumAdmin(admin.ModelAdmin):
