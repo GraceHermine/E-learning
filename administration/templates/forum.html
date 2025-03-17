@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Créer un Nouveau Sujet</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_titre">Titre du Forum</label>
+            {{ form.titre }}
+        </div>
+        <div class="form-group">
+            <label for="id_date_creation">Date de création</label>
+            {{ form.date_creation }}
+        </div>
+        <button type="submit" class="btn btn-success">Créer le sujet</button>
+    </form>
+</div>
+{% endblock %}

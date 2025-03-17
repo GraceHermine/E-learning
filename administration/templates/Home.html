@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Home - eLearning</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Classes d'intervention -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Vos Classes d'Intervention</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-circle text-primary me-2"></i>L1 Computer Science</li>
+                        <li><i class="fas fa-circle text-primary me-2"></i>Classe 1</li>
+                        <li><i class="fas fa-circle text-primary me-2"></i>Classe 2</li>
+                        <li><i class="fas fa-circle text-primary me-2"></i>Classe 3</li>
+                        <li><i class="fas fa-circle text-primary me-2"></i>Classe 4</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matière enseignée -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Matière Enseignée</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-circle text-primary me-2"></i>Le Machine Learning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tâches -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Vos Tâches</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h6 class="text-primary">Publier des Leçons</h6>
+                    <button class="btn btn-primary mt-3">Voir</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Vos Tâches</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h6 class="text-primary">Créer un Forum</h6>
+                    <button class="btn btn-primary mt-3">Voir</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Vos Tâches</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h6 class="text-primary">Créer des Évaluations</h6>
+                    <button class="btn btn-primary mt-3">Voir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card-header {
+    background-color: #06BBCC;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card-body ul {
+    padding-left: 0;
+}
+
+.card-body ul li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.card-body h6 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #06BBCC;
+    border-color: #06BBCC;
+}
+
+.btn-primary:hover {
+    background-color: #05a9b9;
+    border-color: #05a9b9;
+}
+</style>
+{% endblock content %}

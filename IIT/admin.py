@@ -254,3 +254,4 @@ class MessageAdmin(admin.ModelAdmin):
     ]
 
 _register(ChatMessage, MessageAdmin)
+

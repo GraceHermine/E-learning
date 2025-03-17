@@ -1,70 +1,41 @@
 from django.contrib import admin
-from .models import Administrateur,Bibliothcaire,Inscription,Livre, EnseignantB, Bibliotheque
+from .models import Administrateur,Bibliothcaire,Inscription,Livre, EnseignantB, Bibliotheque,EmploiDuTemps
 # Register your models here.
 
-# class EmploiDuTempsAdmin(admin.ModelAdmin):
-#     list_display = ('get_enseignant_nom', 'matiere', 'jour', 'heure_debut', 'heure_fin', 'specialite', 'niveau', 'classe', 'statut', 'created_at')
+class EmploiDuTempsAdmin(admin.ModelAdmin):
+    list_display = ('enseignant', 'matiere', 'departement', 'niveau', 'classe', 'jour', 'heure_debut', 'heure_fin', 'statut')
+    list_filter = ('departement', 'niveau', 'classe', 'jour', 'statut')
+    search_fields = ('enseignant__nom', 'matiere', 'departement', 'jour')
+    ordering = ('jour', 'heure_debut')
 
-#     list_display_links = ['get_enseignant_nom', 'matiere']
+    fieldsets = [
+        ('Enseignant et Matière', {
+            'fields': ['enseignant', 'matiere', 'departement']
+        }),
+        ('Classe', {
+            'fields': ['niveau', 'classe']
+        }),
+        ('Horaire', {
+            'fields': ['jour', 'heure_debut', 'heure_fin']
+        }),
+        ('Statut', {
+            'fields': ['statut']
+        }),
+    ]
 
-#     list_filter = ('statut', 'specialite', 'niveau', 'classe', 'enseignant', 'jour')
+    actions = ['activer', 'desactiver']
 
-#     search_fields = ('enseignant__nom', 'matiere', 'jour', 'specialite', 'niveau', 'classe')
+    def activer(self, request, queryset):
+        queryset.update(statut=True)
+        self.message_user(request, 'Les emplois du temps sélectionnés ont été activés')
+    activer.short_description = "Activer les emplois du temps sélectionnés"
 
-#     ordering = ['jour', 'heure_debut']
+    def desactiver(self, request, queryset):
+        queryset.update(statut=False)
+        self.message_user(request, 'Les emplois du temps sélectionnés ont été désactivés')
+    desactiver.short_description = "Désactiver les emplois du temps sélectionnés"
 
-#     list_per_page = 10
-
-#     date_hierarchy = 'created_at'
-
-#     fieldsets = [
-#         (
-#             'Informations sur le cours', 
-#             {
-#                 'fields': ['enseignant', 'matiere', 'specialite']
-#             }
-#         ),
-#         (
-#             'Horaire', 
-#             {
-#                 'fields': ['jour', 'heure_debut', 'heure_fin']
-#             }
-#         ),
-#         (
-#             'Classe', 
-#             {
-#                 'fields': ['niveau', 'classe']
-#             }
-#         ),
-#         (
-#             'Statut', 
-#             {
-#                 'fields': ['statut']
-#             }
-#         ),
-#     ]
-
-#     def get_enseignant_nom(self, obj):
-#         return obj.enseignant.nom
-#     get_enseignant_nom.short_description = 'Enseignant'
-#     get_enseignant_nom.admin_order_field = 'enseignant__nom'
-
-#     actions = ('active', 'desactive')
-
-#     def active(self, request, queryset):
-#         queryset.update(statut=True)
-#         self.message_user(request, 'La sélection a été activée avec succès')
-#     active.short_description = 'Activer'
-
-#     def desactive(self, request, queryset):
-#         queryset.update(statut=False)
-#         self.message_user(request, 'La sélection a été désactivée avec succès')
-#     desactive.short_description = 'Désactiver'
-# def _register(model, admin_class):
-#     admin.site.register(model, admin_class)
-
-# _register(EmploiDuTemps, EmploiDuTempsAdmin)
-
+admin.site.register(EmploiDuTemps, EmploiDuTempsAdmin)
 
 
 class EnseignantAdmin(admin.ModelAdmin):
