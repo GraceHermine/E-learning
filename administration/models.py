@@ -34,7 +34,7 @@ class EnseignantB(models.Model):
     class Meta:
          verbose_name = "Enseignant"
          verbose_name_plural = "Enseignants"
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,  related_name='enseignant_profile')
     matricule = models.CharField(max_length=255, unique=True, default='IIT-')
     nom = models.CharField(verbose_name="Nom", max_length=255)
     prenom = models.CharField(verbose_name="Prénom", max_length=255)
@@ -68,47 +68,75 @@ class EnseignantB(models.Model):
 
 
 # Modèle Emploi du Temps
-# class EmploiDuTemps(models.Model):
-#     NIVEAU_CHOICES = [
-#         ('L1', 'Licence 1'),
-#         ('L2', 'Licence 2'),
-#         ('L3', 'Licence 3'),
-#         ('M1', 'Master 1'),
-#         ('M2', 'Master 2'),
-#         # Ajoutez d'autres niveaux ici
-#     ]
+class EmploiDuTemps(models.Model):
+    NIVEAU_CHOICES = [
+        ('L1', 'Licence 1'),
+        ('L2', 'Licence 2'),
+        ('L3', 'Licence 3'),
+        ('M1', 'Master 1'),
+        ('M2', 'Master 2'),
+    ]
 
-#     CLASSE_CHOICES = [
-#         ('classe_a', 'Classe A'),
-#         ('classe_b', 'Classe B'),
-#         # Ajoutez d'autres classes ici
-#     ]
+    CLASSE_CHOICES = [
+        ('classe_a', 'Classe OrteaA'),
+        ('classe_b', 'Classe OrteaB'),
+    ]
 
-#     enseignant = models.ForeignKey(Enseignant, on_delete=models.CASCADE, related_name='emplois_du_temps')
-#     specialite = models.CharField(max_length=50, choices=Enseignant.SPECIALITE_CHOICES)
-#     niveau = models.CharField(verbose_name="Niveau", max_length=10, choices=NIVEAU_CHOICES)
-#     classe = models.CharField(verbose_name="Classe", max_length=10, choices=CLASSE_CHOICES)
-#     jour = models.CharField(verbose_name="Jour", max_length=50)
-#     matiere = models.CharField(verbose_name="Matière", max_length=255)
-#     heure_debut = models.TimeField(verbose_name="Heure de début")
-#     heure_fin = models.TimeField(verbose_name="Heure de fin")
-#     statut = models.BooleanField(default=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
+    enseignant = models.ForeignKey(
+        EnseignantB, 
+        on_delete=models.CASCADE, 
+        related_name='emplois_du_temps',
+        verbose_name="Enseignant"
+    )
+    departement = models.CharField(
+        max_length=50, 
+        choices=EnseignantB.SPECIALITE_CHOICES,
+        verbose_name="Département"
+    )
+    niveau = models.CharField(
+        max_length=10, 
+        choices=NIVEAU_CHOICES,
+        verbose_name="Niveau"
+    )
+    classe = models.CharField(
+        max_length=10, 
+        choices=CLASSE_CHOICES,
+        verbose_name="Classe"
+    )
+    JOURS_CHOICES = [
+        ('lundi', 'Lundi'),
+        ('mardi', 'Mardi'),
+        ('mercredi', 'Mercredi'),
+        ('jeudi', 'Jeudi'),
+        ('vendredi', 'Vendredi'),
+        ('samedi', 'Samedi'),
+    ]
 
-#     def __str__(self):
-#         return f"{self.enseignant.nom} - {self.jour} de {self.heure_debut} à {self.heure_fin} ({self.enseignant.specialite}, {self.niveau}, {self.classe})"
+    jour = models.CharField(
+        max_length=50,
+        verbose_name="Jour",
+        choices=JOURS_CHOICES,
+    )
+    matiere = models.CharField(
+        max_length=255,
+        verbose_name="Matière"
+    )
+    heure_debut = models.TimeField(verbose_name="Heure de début")
+    heure_fin = models.TimeField(verbose_name="Heure de fin")
+    statut = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-#     @property
-#     def titre(self):
-#         return f"Emploi du temps pour la filière {self.enseignant.specialite}, {self.niveau} - {self.classe}"
+    class Meta:
+        verbose_name = "Emploi du temps"
+        verbose_name_plural = "Emplois du temps"
+        ordering = ['jour', 'heure_debut']
 
-#     def __str__(self):
-#         return f"{self.enseignant.nom} - {self.jour} de {self.heure_debut} à {self.heure_fin} ({self.specialite}, {self.niveau}, {self.classe})"
+    def __str__(self):
+        return f"{self.enseignant.nom} - {self.matiere} - {self.jour} ({self.heure_debut} - {self.heure_fin})"
 
-#     @property
-#     def titre(self):
-#         return f"Emploi du temps pour la filière {self.specialite}, {self.niveau} - {self.classe}"
-
+    @property
+    def titre(self):
+        return f"Cours de {self.matiere} - {self.departement} {self.niveau} {self.classe}"
 
 
 class Livre(models.Model):

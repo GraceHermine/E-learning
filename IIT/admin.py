@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Etudiant, Forum, Reclamation, Cours, Salle, Evaluation, Note
+from .models import Etudiant, Forum, Cours, Salle, Evaluation, Note, Reclamation
 
-# Admin pour le modèle Etudiant
 class EtudiantAdmin(admin.ModelAdmin):
     list_display = ('matricule', 'specialite', 'created_at')
     list_display_links = ['matricule',]
@@ -30,33 +29,6 @@ def _register(model, admin_class):
 
 _register(Etudiant, EtudiantAdmin)
 
-# Admin pour le modèle Forum
-class ForumAdmin(admin.ModelAdmin):
-    list_display = ('titre', 'date_creation', 'created_at')
-    list_display_links = ['titre']
-    list_filter = ('date_creation',)
-    search_fields = ('titre',)
-    ordering = ['titre', 'date_creation']
-    list_per_page = 10
-    date_hierarchy = 'created_at'
-    fieldsets = [
-        (
-            'Infos',
-            {
-                'fields': ['titre', 'date_creation'],
-            },
-        ),
-        (
-            'Standards',
-            {
-                'fields': ['created_at', ]
-            }
-        ),
-    ]
-
-_register(Forum, ForumAdmin)
-
-# Admin pour le modèle Reclamation
 class ReclamationAdmin(admin.ModelAdmin):
     list_display = ('sujet', 'description', 'statut', 'created_at')
     list_display_links = ['sujet']
@@ -82,18 +54,42 @@ class ReclamationAdmin(admin.ModelAdmin):
     actions = ('active', 'desactive')
 
     def active(self, request, queryset):
-        queryset.update(statut=True)
+        queryset.update(statut="Traité")
         self.message_user(request, 'La sélection a été activée avec succès')
     active.short_description = 'Activer'
 
     def desactive(self, request, queryset):
-        queryset.update(statut=False)
+        queryset.update(statut="En attente")
         self.message_user(request, 'La sélection a été désactivée avec succès')
     desactive.short_description = 'Désactiver'
 
 _register(Reclamation, ReclamationAdmin)
 
-# Admin pour le modèle Cours
+class ForumAdmin(admin.ModelAdmin):
+    list_display = ('titre', 'date_creation', 'created_at')
+    list_display_links = ['titre']
+    list_filter = ('date_creation',)
+    search_fields = ('titre',)
+    ordering = ['titre', 'date_creation']
+    list_per_page = 10
+    date_hierarchy = 'created_at'
+    fieldsets = [
+        (
+            'Infos',
+            {
+                'fields': ['titre', 'date_creation'],
+            },
+        ),
+        (
+            'Standards',
+            {
+                'fields': ['created_at', ]
+            }
+        ),
+    ]
+
+_register(Forum, ForumAdmin)
+
 class CoursAdmin(admin.ModelAdmin):
     list_display = ('titre', 'heures', 'credits', 'created_at')
     list_display_links = ['titre']
@@ -119,7 +115,6 @@ class CoursAdmin(admin.ModelAdmin):
 
 _register(Cours, CoursAdmin)
 
-# Admin pour le modèle Salle
 class SalleAdmin(admin.ModelAdmin):
     list_display = ('nom', 'capacite', 'type_salle', 'created_at')
     list_display_links = ['nom']
@@ -145,7 +140,6 @@ class SalleAdmin(admin.ModelAdmin):
 
 _register(Salle, SalleAdmin)
 
-# Admin pour le modèle Evaluation
 class EvaluationAdmin(admin.ModelAdmin):
     list_display = ('type_evaluation', 'date', 'created_at')
     list_display_links = ['type_evaluation']
@@ -171,7 +165,6 @@ class EvaluationAdmin(admin.ModelAdmin):
 
 _register(Evaluation, EvaluationAdmin)
 
-# Admin pour le modèle Note
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('etudiant', 'note', 'created_at')
     list_display_links = ['etudiant']

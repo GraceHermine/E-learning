@@ -1,0 +1,142 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Emploi du Temps - eLearning</title>
+{% endblock title %}
+
+{% block content %}
+<div class="content-wrapper">
+
+    <!-- Filters -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 text-primary">Emploi du temps</h2>
+    
+            <!-- Filters -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-10">
+                    <form method="get">
+                        <div class="row g-4">
+                            <!-- Niveau Select -->
+                            <div class="col-md-4">
+                                <div class="filter-box p-4 bg-light rounded-3 shadow-sm">
+                                    <label for="niveau" class="form-label text-primary fw-bold mb-3">Niveau</label>
+                                    <select name="niveau" id="niveau" class="form-select form-select-lg border-2" onchange="this.form.submit()">
+                                        <option value="">Tous les niveaux</option>
+                                        {% for code, label in niveaux %}
+                                            <option value="{{ code }}" {% if code == niveau_actif %}selected{% endif %}>
+                                                {{ label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <!-- Classe Select -->
+                            <div class="col-md-4">
+                                <div class="filter-box p-4 bg-light rounded-3 shadow-sm">
+                                    <label for="classe" class="form-label text-primary fw-bold mb-3">Classe</label>
+                                    <select name="classe" id="classe" class="form-select form-select-lg border-2" onchange="this.form.submit()">
+                                        <option value="">Toutes les classes</option>
+                                        {% for code, label in classes %}
+                                            <option value="{{ code }}" {% if code == classe_active %}selected{% endif %}>
+                                                {{ label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <!-- Jour Select -->
+                            <div class="col-md-4">
+                                <div class="filter-box p-4 bg-light rounded-3 shadow-sm">
+                                    <label for="jour" class="form-label text-primary fw-bold mb-3">Jour</label>
+                                    <select name="jour" id="jour" class="form-select form-select-lg border-2" onchange="this.form.submit()">
+                                        <option value="">Tous les jours</option>
+                                        {% for code, label in jours %}
+                                            <option value="{{ code }}" {% if code == jour_actif %}selected{% endif %}>
+                                                {{ label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    .filter-box {
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        background-color: #06BBCC !important;
+    }
+    
+    .filter-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+    
+    .form-select {
+        border-color: #e9ecef;
+        transition: all 0.3s ease;
+        height: 3.5rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .form-select:hover, .form-select:focus {
+        border-color: #06BBCC;
+        box-shadow: 0 0 0 0.25rem rgba(6, 187, 204, 0.25);
+    }
+    
+    .form-label {
+        font-size: 1.2rem;
+        color: rgb(234, 239, 240);
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        color: #06BBCC;
+    }
+    </style>
+    <!-- Timetable -->
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Jour</th>
+                    <th>Heure</th>
+                    <th>Matière</th>
+                    <th>Enseignant</th>
+                    <th>Niveau</th>
+                    <th>Classe</th>
+                    <th>Département</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emploi in emplois %}
+                <tr>
+                    <td>{{ emploi.get_jour_display }}</td>
+                    <td>{{ emploi.heure_debut }} - {{ emploi.heure_fin }}</td>
+                    <td>{{ emploi.matiere }}</td>
+                    <td>{{ emploi.enseignant.nom }} {{ emploi.enseignant.prenom }}</td>
+                    <td>{{ emploi.get_niveau_display }}</td>
+                    <td>{{ emploi.get_classe_display }}</td>
+                    <td>{{ emploi.get_departement_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun emploi du temps trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
