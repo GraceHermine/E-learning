@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Départements -->
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-lg border-light">
+                <div class="card-header bg-primary text-white">Départements</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for departement in departements %}
+                            <li class="list-group-item">{{ departement.nom }} ({{ departement.code }}) - Budget: {{ departement.budget }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}

@@ -7,7 +7,7 @@ class Departement(models.Model):
     budget = models.DecimalField(max_digits=10, decimal_places=2)
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True) 
 
     def __str__(self):
@@ -19,7 +19,7 @@ class Club(models.Model):
     description = models.TextField()
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True) 
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Evenement(models.Model):
     lieu = models.CharField(max_length=255)
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True) 
 
     def __str__(self):
