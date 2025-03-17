@@ -4,107 +4,115 @@
 <section class="gradient-custom">
   <div class="container py-5">
     <div class="row">
-      <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-md-0">
-        <h5 class="font-weight-bold mb-3 text-center text-white">
-          Membre
-        </h5>
+      <!-- Partie affichage des messages par utilisateur -->
+        <!-- Partie affichage des messages par utilisateur -->
+        <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-md-0">
+            <h5 class="font-weight-bold mb-3 text-center text-white">Membres</h5>
 
-        <div class="card mask-custom">
-          <div class="card-body">
-            
-            <ul class="list-unstyled mb-0">
-            {% for message in messages %}
-
-           
-              <li class="p-2 border-bottom"
-                style="border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;">
-                <a href="#!" class="d-flex justify-content-between link-light">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">
-                        {{ message.user.username }}
-                      </p>
-                      <p class="small text-white">
-                        {{ message.message }}
-                      </p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-white mb-1">
-                        {{ message.created_at }}
-                    </p>
-                    <span class="badge bg-danger float-end">1</span>
-                  </div>
-                </a>
-              </li>
-              {% empty %}
-                <p>Aucun message pour le moment.</p>
-              {% endfor %}
-            </ul>
-          </div>
+            <div class="card mask-custom">
+                <div class="card-body messages-container"> <!-- Ajout de la classe pour le scroll -->
+                    <ul class="list-unstyled mb-0">
+                        {% for user, last_message in user_messages.items %}
+                        <li class="p-2 border-bottom" style="border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;">
+                            <a href="#!" class="d-flex justify-content-between link-light">
+                                <div class="d-flex flex-row">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                                    <div class="pt-1">
+                                        <p class="fw-bold mb-0">{{ user.username }}</p>
+                                        <p class="small text-white">{{ last_message.message }}</p>
+                                    </div>
+                                </div>
+                                <div class="pt-1">
+                                    <span class="badge bg-danger float-end">
+                                        {% if user.id in message_counts %}
+                                            {{ message_counts.user.id }}
+                                        {% else %}
+                                            1
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                        {% empty %}
+                        <p>Aucun message pour le moment.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="col-md-6 col-lg-7 col-xl-7">
-        <ul class="list-unstyled text-white">
-            {% for message in messages %}
-            <li class="d-flex justify-content-between mb-4">
-                {% if message.user == request.user %}
-                    <div class="card mask-custom w-100">
-                        <div class="card-header d-flex justify-content-between p-3" 
-                            style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                            <p class="fw-bold mb-0">{{ message.user.username }}</p>
-                            <p class="text-light small mb-0">
-                                <i class="far fa-clock"></i> {{ message.created_at|timesince }} ago
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            <p class="mb-0">
-                                {{ message.message }}
-                            </p>
-                        </div>
-                    </div>
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                        class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60" />
-                {% else %}
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                        class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
-                    <div class="card mask-custom">
-                        <div class="card-header d-flex justify-content-between p-3" 
-                            style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                            <p class="fw-bold mb-0">{{ message.user.username }}</p>
-                            <p class="text-light small mb-0">
-                                <i class="far fa-clock"></i> {{ message.created_at|timesince }} ago
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            <p class="mb-0">
-                                {{ message.message }}
-                            </p>
-                        </div>
-                    </div>
-                {% endif %}
-            </li>
-            {% empty %}
-            <li class="text-center text-muted">Aucun message pour le moment.</li>
-            {% endfor %}
-            <li class="mb-3">
-                <form method="POST">
-                    {% csrf_token %}
-                    <div data-mdb-input-init class="form-outline form-white">
-                        <textarea class="form-control" name="message" id="textAreaExample" rows="4"></textarea>
-                        <label class="form-label" for="textAreaExample">Message</label>
-                    </div>
-                    <button type="submit" data-mdb-button-init data-mdb-ripple-init 
-                        class="btn btn-light btn-lg btn-rounded float-end mt-2">
-                        Send
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </div>
+        <!-- Partie affichage des messages pour l'utilisateur actuel -->
+        <div class="col-md-6 col-lg-7 col-xl-7">
+            <div class="chat-container"> <!-- Ajout de la classe pour fixer la hauteur -->
+                <ul class="list-unstyled text-white">
+                    {% for message in messages %}
+                    <li class="d-flex justify-content-between mb-4">
+                        {% if message.user == request.user %}
+                            <div class="card mask-custom w-100">
+                                <div class="card-header d-flex justify-content-between p-3" 
+                                    style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                                    <p class="fw-bold mb-0">{{ message.user.username }}</p>
+                                    <p class="text-light small mb-0">
+                                        <i class="far fa-clock"></i> {{ message.created_at|timesince }} ago
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-0">
+                                        {{ message.message }}
+                                    </p>
+                                </div>
+                            </div>
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+                                class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60" />
+                        {% else %}
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
+                            <div class="card mask-custom">
+                                <div class="card-header d-flex justify-content-between p-3" 
+                                    style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                                    <p class="fw-bold mb-0">{{ message.user.username }}</p>
+                                    <p class="text-light small mb-0">
+                                        <i class="far fa-clock"></i> {{ message.created_at|timesince }} ago
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-0">
+                                        {{ message.message }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </li>
+                    {% empty %}
+                    <li class="text-center text-muted">Aucun message pour le moment.</li>
+                    {% endfor %}
+                    <li class="mb-3">
+                        <form method="POST" class="mb-4">
+                            {% csrf_token %}
+                            <div class="form-outline form-white position-relative">
+                                <!-- Zone de texte avec un padding droit pour l'icône -->
+                                <textarea class="form-control pe-5" name="message" id="textAreaExample" rows="4" required></textarea>
+                                <label class="form-label" for="textAreaExample">Votre message</label>
+                                
+                                <!-- Flèche d'envoi positionnée à l'intérieur du champ -->
+                                <button type="submit" class="btn btn-light btn-lg btn-rounded position-absolute top-50 translate-middle-y end-0 pe-3" aria-label="Envoyer le message">
+                                    <i class="fas fa-arrow-right"></i> <!-- Icône de flèche -->
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Optionnel : message de confirmation -->
+                        {% if success %}
+                            <div class="alert alert-success mt-2">
+                                Message envoyé avec succès !
+                            </div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
   </div>
 </section>

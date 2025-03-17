@@ -33,11 +33,16 @@ class Forum(models.Model):
         verbose_name_plural = "Forums"
 
     titre = models.CharField(max_length=255)
+   
     date_creation = models.DateField()
-
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=False)
     last_updated_at = models.DateTimeField(auto_now=True)
+
+    # Relations vers Enseignant, Etudiant, et Administrateur
+    enseignants = models.ManyToManyField(EnseignantB, related_name='forums_ensiegnants')
+    etudiants = models.ManyToManyField(Etudiant, related_name='forums_etudiants')
+    administrateurs = models.ManyToManyField(User, related_name='forums_admin', limit_choices_to={'is_staff': True})
 
     def __str__(self):
         return self.titre
@@ -148,5 +153,12 @@ class ChatMessage(models.Model):
     def __str__(self):
         return f"Message from {self.user.username} at {self.created_at}"
     
+class Message(models.Model):
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, related_name='messages')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"Message de {self.user.username} sur {self.forum.titre}"
     

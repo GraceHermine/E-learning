@@ -1,26 +1,28 @@
+from collections import defaultdict
 from datetime import date
 from django.db import models
 from django.shortcuts import get_object_or_404, render,redirect
-from IIT.models import Cours,Forum,ChatMessage,Evaluation,Note,Reclamation
+from IIT.models import Cours,Forum,ChatMessage,Evaluation,Note,Reclamation, User
 from administration.models import Livre
 from activitees.models import Club,Evenement
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def error(request):
+# def error(request):
 
-    datas = {
+#     datas = {
 
-    }
+#     }
 
-    return render(request, '404.html', datas)
+#     return render(request, '404.html', datas)
 
-def contacts(request):
+# def contacts(request):
 
-    datas = {
+#     datas = {
 
-    }
+#     }
 
-    return render(request, 'contact.html', datas)
+#     return render(request, 'contact.html', datas)
 
 
 def index(request):
@@ -29,7 +31,7 @@ def index(request):
     evaluations = Evaluation.objects.all()
     messages = ChatMessage.objects.filter(user=request.user)  # Messages de l'utilisateur connecté
     livres = Livre.objects.all()
-    emploi_temps = EmploiDuTemps.objects.all()
+    # emploi_temps = EmploiDuTemps.objects.all()
     clubs = Club.objects.all()
     evenements = Evenement.objects.all()
 
@@ -39,7 +41,7 @@ def index(request):
         'evaluations': evaluations,
         'messages': messages,
         'livres': livres,
-        'emploi_temps': emploi_temps,
+        # 'emploi_temps': emploi_temps,
         'clubs': clubs,
         'evenements': evenements,
     }
@@ -62,20 +64,44 @@ def about(request):
 
     return render(request, 'about.html', datas)
 
+
+
 def forum_view(request):
     forums = Forum.objects.all().order_by('-date_creation') # Récupérer tous les forums
     return render(request, 'forum.html', {'forums': forums})
 
 
-def chat_view(request):
-    if request.method == "POST":
-        message_content = request.POST.get("message")
-        if message_content:
-            ChatMessage.objects.create(user=request.user, message=message_content)
-        return redirect('chat')
 
-    messages = ChatMessage.objects.all().order_by('-created_at')
-    return render(request, 'chat.html', {'messages': messages})
+
+@login_required
+def chat_view(request):
+    # Récupérer tous les utilisateurs et leur dernier message
+    users = User.objects.all()
+    user_messages = {
+        user: ChatMessage.objects.filter(user=user).order_by('-created_at').first()
+        for user in users
+    }
+
+    # Compter les messages pour chaque utilisateur
+    message_counts = {
+        user.id: ChatMessage.objects.filter(user=user).count()
+        for user in users
+    }
+
+    # Récupérer les messages de l'utilisateur actuel
+    messages = ChatMessage.objects.all().order_by('created_at')
+
+    if request.method == "POST":
+        message_text = request.POST.get("message")
+        if message_text:
+            ChatMessage.objects.create(user=request.user, message=message_text)
+            return redirect('chat')  # Rediriger pour rafraîchir la page
+
+    return render(request, "chat.html", {
+        "messages": messages,
+        "user_messages": user_messages,
+        "message_counts": message_counts
+    })
 
 def evaluations_view(request):
     today = date.today()
@@ -128,3 +154,30 @@ def cours_view(request):
     cours_list = Cours.objects.all()
 
     return render(request, "courses.html", {"cours_list": cours_list})
+
+
+# forummms
+def forum(request):
+    forums = Forum.objects.all()
+    return render(request, 'forum.html', {'forums': forums})
+
+def forum_detail(request, id):
+    forum = get_object_or_404(Forum, id=id)
+
+    # Récupérer tous les messages associés à ce forum
+    messages = ChatMessage.objects.filter(forum=forum)  # Assurez-vous que la relation existe
+
+    # Si le formulaire est soumis, ajouter un message au forum
+    if request.method == "POST":
+        new_message = request.POST.get('message')
+        if new_message:
+            # Créer un nouveau message et l'ajouter
+            ChatMessage.objects.create(forum=forum, message=new_message, user=request.user)
+    
+    # Passer les messages existants et le forum au template
+    datas = {
+        'forum': forum,
+        'messages': messages,
+    }
+
+    return render(request, 'forums_detail.html', datas)

@@ -3,10 +3,10 @@
     background: #fccb90;
     
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgb(69, 82, 233));
     
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1))
+    background: linear-gradient(to bottom right, rgb(243, 232, 113), rgb(72, 31, 236))
     }
     
     .mask-custom {
@@ -16,4 +16,70 @@
     border: 2px solid rgba(255, 255, 255, 0.05);
     background-clip: padding-box;
     box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+    }
+
+    .messages-container {
+        height: 600px; /* Ajuste cette hauteur selon ton besoin */
+        overflow-y: auto;
+      }
+    
+      .chat-container {
+        height: 700px; /* Hauteur fixe pour toute la section chat */
+        overflow-y: auto;
+      }
+
+
+      .arrow-btn {
+        background-color: transparent;
+        border: 2px solid #ffffff;
+        padding: 10px 20px;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    
+
+
+    .form-outline {
+        position: relative;
+    }
+    
+    
+    
+    .pe-5 {
+        padding-right: 50px; /* Ajout de padding pour la flèche */
+    }
+    
+    .btn {
+        position: absolute;
+        right: 10px; /* Alignement de la flèche à droite */
+        top: 50%; /* Alignement vertical */
+        transform: translateY(-50%); /* Centrage vertical */
+        background-color: transparent;
+        border: none;
+        color: #0e2cc5;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    .btn:hover {
+        color: #6c757d; /* Changement de couleur au survol */
+    }
+
+    textarea.form-control {
+        border-radius: 10px;
+        padding-right: 50px; /* Espace pour l'icône */
+    }
+    
+    .send-button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
     }

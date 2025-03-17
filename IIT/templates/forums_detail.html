@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">{{ forum.titre }}</h2>
+    <p>{{ forum.date_creation }}</p>
+
+    <!-- Affichage des messages existants -->
+    <div class="mb-4">
+        <h4>Messages :</h4>
+        <ul class="list-group">
+            {% for message in messages %}
+                <li class="list-group-item">
+                    <strong>{{ message.user.username }} :</strong> {{ message.message }}
+                    <span class="text-muted float-end">{{ message.created_at }}</span>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Aucun message pour ce forum.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Formulaire pour ajouter un message -->
+    <div class="mt-4">
+        <h4>Ajouter un message</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="message" class="form-control" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
