@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Bibliothèque | eLEARNING</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Notre Bibliothèque</h1>
+    <div class="row">
+        {% for livre in livres %}
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if livre.couverture %}
+                    <img src="{{ livre.couverture.url }}" class="card-img-top" alt="{{ livre.titre }}" style="height: 300px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/default_book.jpg' %}" class="card-img-top" alt="Image non disponible" style="height: 300px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ livre.titre }}</h5>
+                    <p class="card-text">{{ livre.resume|truncatewords:20 }}</p>
+                    <p><strong>Auteur :</strong> {{ livre.auteur }}</p>
+                    <p><strong>Catégorie :</strong> {{ livre.categorie }}</p>
+                    <a href="{% url 'detail_livre' livre.id %}" class="btn btn-primary mt-auto">Voir Détails</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Aucun livre disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

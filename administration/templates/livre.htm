@@ -1,0 +1,27 @@
+<!-- Livre.html -->
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h2 class="text-center my-4">Liste des Livres Disponibles</h2>
+<div class="container">
+    <div class="row">
+        {% for livre in livre %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ livre.titre }}</h5>
+                    <p class="card-text"><strong>Auteur:</strong> {{ livre.auteur }}</p>
+                    <p class="card-text"><strong>Édition:</strong> {{ livre.edition|date:"Y" }}</p>
+                    <p class="card-text"><strong>ISBN:</strong> {{ livre.isbn }}</p>
+                    <a href="{% url 'reserver_livre' livre.id %}" class="btn btn-primary">Réserver</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Aucun livre trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

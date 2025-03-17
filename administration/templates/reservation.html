@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="text-center my-4">Mes Réservations</h2>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Livre</th>
+                <th>Date de Réservation</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.livre.titre }}</td>
+                <td>{{ reservation.date_reservation }}</td>
+                <td>
+                    {% if reservation.statut == "Validée" %}
+                        <span class="text-success"><strong>{{ reservation.statut }}</strong></span>
+                    {% elif reservation.statut == "En attente" %}
+                        <span class="text-warning"><strong>{{ reservation.statut }}</strong></span>
+                    {% else %}
+                        <span class="text-danger"><strong>{{ reservation.statut }}</strong></span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">Aucune réservation trouvée.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
