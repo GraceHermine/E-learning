@@ -27,7 +27,8 @@ User = get_user_model()
 #         verbose_name = "Enseignant"
 #         verbose_name_plural = "Enseignants"
 
-#     def _str_(self):
+#     def __str__(self):
+
 #         return self.nom
 
 class EnseignantB(models.Model):
@@ -63,7 +64,8 @@ class EnseignantB(models.Model):
             self.user = kwargs.get('request').user  # Assign the currently logged-in user
         super().save(*args, **kwargs)
 
-    def _str_(self):
+
+    def __str__(self):
           return self.nom
 
 
@@ -95,14 +97,16 @@ class EnseignantB(models.Model):
 #     statut = models.BooleanField(default=True)
 #     created_at = models.DateTimeField(auto_now_add=True)
 
-#     def _str_(self):
+#     def __str__(self):
+
 #         return f"{self.enseignant.nom} - {self.jour} de {self.heure_debut} à {self.heure_fin} ({self.enseignant.specialite}, {self.niveau}, {self.classe})"
 
 #     @property
 #     def titre(self):
 #         return f"Emploi du temps pour la filière {self.enseignant.specialite}, {self.niveau} - {self.classe}"
 
-#     def _str_(self):
+#     def __str__(self):
+
 #         return f"{self.enseignant.nom} - {self.jour} de {self.heure_debut} à {self.heure_fin} ({self.specialite}, {self.niveau}, {self.classe})"
 
 #     @property
@@ -150,7 +154,7 @@ class Livre(models.Model):
 class Bibliotheque(models.Model):
     nom = models.CharField(max_length=255, verbose_name="Nom de la bibliothèque")
     responsable = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name="Bibliothécaire responsable")
-    livres = models.ManyToManyField(Livre, related_name='bibliotheques', verbose_name="Livres")
+    livres = models.ManyToMayField(Livre, related_name='bibliotheques', verbose_name="Livres")
     adresse = models.CharField(max_length=255, verbose_name="Adresse")
     telephone = models.CharField(max_length=255, verbose_name="Téléphone")
     statut = models.BooleanField(default=True, verbose_name="Active")
@@ -161,7 +165,9 @@ class Bibliotheque(models.Model):
         verbose_name = "Bibliothèque"
         verbose_name_plural = "Bibliothèques"
 
-    def _str_(self):
+
+    def __str__(self):
+
         return self.nom
 
     def get_livres_disponibles(self):
@@ -184,9 +190,11 @@ class Bibliothcaire(models.Model):
         verbose_name = "Bibliothécaire"
         verbose_name_plural = "Bibliothécaires"
 
-    def _str_(self):
+
+    def __str__(self):
           return self.nom
-    # def _str_(self):
+    # def __str__(self):
+
         # return self.user.username if self.user else "Bibliothécaire sans compte"
 
 # Modèle Livre
