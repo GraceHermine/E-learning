@@ -50,7 +50,6 @@ class Reclamation(models.Model):
 
 
     etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
-    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
     sujet = models.CharField(max_length=255)
     description = models.TextField()
     statut = models.CharField(max_length=50, choices=[("En attente", "En attente"), ("Traité", "Traité")])
@@ -82,7 +81,6 @@ class Cours(models.Model):
     credits = models.PositiveIntegerField()  # Nombre de crédits
     video_url = models.URLField(blank=True, null=True)   # Lien YouTube
     contenu = models.TextField()
-    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
     
     
 
@@ -127,9 +125,6 @@ class Evaluation(models.Model):
         return f"{self.type_evaluation} - {self.date}"
 
 class Note(models.Model):
-
-    enseignant = models.ForeignKey(EnseignantB, on_delete=models.CASCADE)
-    cour = models.ForeignKey(Cours, on_delete=models.CASCADE)
     evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)  # Lien avec le modèle Evaluation
     etudiant = models.CharField(max_length=100)  # Nom de l'étudiant
     

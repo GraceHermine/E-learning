@@ -2,6 +2,8 @@ from datetime import date
 from django.db import models
 from django.shortcuts import get_object_or_404, render,redirect
 from IIT.models import Cours,Forum,ChatMessage,Evaluation,Note,Reclamation
+from administration.models import Livre
+from activitees.models import Club,Evenement
 
 # Create your views here.
 def error(request):
@@ -26,12 +28,20 @@ def index(request):
     forums = Forum.objects.all()
     evaluations = Evaluation.objects.all()
     messages = ChatMessage.objects.filter(user=request.user)  # Messages de l'utilisateur connecté
+    livres = Livre.objects.all()
+    emploi_temps = EmploiDuTemps.objects.all()
+    clubs = Club.objects.all()
+    evenements = Evenement.objects.all()
 
     datas = {
         'courses': courses,
         'forums': forums,
         'evaluations': evaluations,
         'messages': messages,
+        'livres': livres,
+        'emploi_temps': emploi_temps,
+        'clubs': clubs,
+        'evenements': evenements,
     }
     return render(request, 'index.html', datas)
 

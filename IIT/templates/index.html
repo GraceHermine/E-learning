@@ -21,6 +21,10 @@
                 <li class="nav-item"><a href="{% url 'about' %}" class="nav-link text-dark">📝 Évaluations</a></li>
                 <li class="nav-item"><a href="{% url 'forum' %}" class="nav-link text-dark">💬 Forums</a></li>
                 <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link text-dark">📩 Messages</a></li>
+                <li class="nav-item"><a href="{% url 'bibliotheque' %}" class="nav-link text-dark">📖 Bibliothèque</a></li>
+                <li class="nav-item"><a href="{% url 'emploi_temps' %}" class="nav-link text-dark">📅 Emploi du Temps</a></li>
+                <li class="nav-item"><a href="{% url 'clubs' %}" class="nav-link text-dark">🏅 Clubs</a></li>
+                <li class="nav-item"><a href="{% url 'evenements' %}" class="nav-link text-dark">🎉 Événements</a></li>
             </ul>
         </nav>
 
@@ -71,43 +75,83 @@
             </div>
 
             <div class="row">
-                <!-- Forums -->
+                <!-- Bibliothèque -->
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-sm border-light">
-                        <div class="card-header bg-success text-white">💬 Forums Consultés</div>
+                        <div class="card-header bg-info text-white">📖 Bibliothèque</div>
                         <div class="card-body">
-                            {% if forums %}
+                            {% if livres %}
                                 <ul class="list-group">
-                                    {% for forum in forums %}
+                                    {% for livre in livres %}
                                         <li class="list-group-item">
-                                            {{ forum.titre }} 
-                                            <small class="text-muted">Créé le {{ forum.date_creation }}</small>
+                                            {{ livre.titre }} - {{ livre.auteur }}
                                         </li>
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                <p class="text-muted">Pas encore de forum consulté.</p>
+                                <p class="text-muted">Aucun livre disponible.</p>
                             {% endif %}
                         </div>
                     </div>
                 </div>
 
-                <!-- Évaluations -->
+                <!-- Emploi du Temps -->
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-sm border-light">
-                        <div class="card-header bg-dark text-white">📊 Évaluations</div>
+                        <div class="card-header bg-danger text-white">📅 Emploi du Temps</div>
                         <div class="card-body">
-                            {% if evaluations %}
+                            {% if emploi_temps %}
                                 <ul class="list-group">
-                                    {% for eval in evaluations %}
+                                    {% for cours in emploi_temps %}
                                         <li class="list-group-item">
-                                            {{ eval.type_evaluation }} - {{ eval.cours.titre }} 
-                                            <small class="text-muted">Le {{ eval.date }} (Durée : {{ eval.duree }} min)</small>
+                                            {{ cours.nom }} - {{ cours.horaire }}
                                         </li>
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                <p class="text-muted">Aucune évaluation à venir.</p>
+                                <p class="text-muted">Aucun emploi du temps défini.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Clubs -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-secondary text-white">🏅 Clubs</div>
+                        <div class="card-body">
+                            {% if clubs %}
+                                <ul class="list-group">
+                                    {% for club in clubs %}
+                                        <li class="list-group-item">
+                                            {{ club.nom }} - {{ club.description }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Pas encore de club rejoint.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Événements -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-dark text-white">🎉 Événements</div>
+                        <div class="card-body">
+                            {% if evenements %}
+                                <ul class="list-group">
+                                    {% for event in evenements %}
+                                        <li class="list-group-item">
+                                            {{ event.titre }} - {{ event.date|date:"d M Y" }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucun événement à venir.</p>
                             {% endif %}
                         </div>
                     </div>

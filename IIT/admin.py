@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Etudiant, Forum, Reclamation, Cours, Salle, Evaluation, Note
+from .models import Etudiant, Forum, Reclamation, Cours, Salle, Evaluation, Note,ChatMessage
 
 # Admin pour le modèle Etudiant
 class EtudiantAdmin(admin.ModelAdmin):
@@ -117,6 +117,17 @@ class CoursAdmin(admin.ModelAdmin):
         ),
     ]
 
+    def active(self, request, queryset):
+        queryset.update(statut=True)
+        self.message_user(request, 'La sélection a été activée avec succès')
+    active.short_description = 'Activer'
+
+    def desactive(self, request, queryset):
+        queryset.update(statut=False)
+        self.message_user(request, 'La sélection a été désactivée avec succès')
+    desactive.short_description = 'Désactiver'
+
+
 _register(Cours, CoursAdmin)
 
 # Admin pour le modèle Salle
@@ -142,6 +153,17 @@ class SalleAdmin(admin.ModelAdmin):
             }
         ),
     ]
+
+    def active(self, request, queryset):
+        queryset.update(statut=True)
+        self.message_user(request, 'La sélection a été activée avec succès')
+    active.short_description = 'Activer'
+
+    def desactive(self, request, queryset):
+        queryset.update(statut=False)
+        self.message_user(request, 'La sélection a été désactivée avec succès')
+    desactive.short_description = 'Désactiver'
+
 
 _register(Salle, SalleAdmin)
 
@@ -170,6 +192,17 @@ class EvaluationAdmin(admin.ModelAdmin):
             }
         ),
     ]
+
+    def active(self, request, queryset):
+        queryset.update(statut=True)
+        self.message_user(request, 'La sélection a été activée avec succès')
+    active.short_description = 'Activer'
+
+    def desactive(self, request, queryset):
+        queryset.update(statut=False)
+        self.message_user(request, 'La sélection a été désactivée avec succès')
+    desactive.short_description = 'Désactiver'
+
     
 # Enregistrer l'administration personnalisée
 admin.site.register(Evaluation, EvaluationAdmin)
@@ -199,3 +232,25 @@ class NoteAdmin(admin.ModelAdmin):
     ]
 
 _register(Note, NoteAdmin)
+
+
+
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'created_at')
+    list_display_links = ['user']
+    list_filter = ('message',)
+    search_fields = ('user',)
+    ordering = ['user', 'message']
+    list_per_page = 10
+    date_hierarchy = 'created_at'
+    fieldsets = [
+        (
+            'Infos',
+            {
+                'fields': ['user', 'message'],
+            },
+        ),
+        
+    ]
+
+_register(ChatMessage, MessageAdmin)
