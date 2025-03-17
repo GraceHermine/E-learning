@@ -1,39 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - eLearning</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLearning</h2>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="#" class="nav-item nav-link active">Accueil</a>
-                <!-- <a href="{% url 'about' %}" class="nav-item nav-link">À propos de Nous</a> -->
-                <!-- <a href="#" class="nav-item nav-link">Le coin ADMIN ⚠</a> -->
-                <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Le coin ADMIN ⚠<i class="fa fa-arrow-right ms-3"></i></a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="btn btn-secondary py-4 px-lg-5 d-none d-lg-block">Se déconnecter<i class="fa fa-sign-out-alt ms-3"></i></a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-secondary py-4 px-lg-5 d-none d-lg-block">Se connecter<i class="fa fa-sign-in-alt ms-3"></i></a>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
+{% extends 'base/base.html' %}
 
-<<<<<<< HEAD
 {% block content %}
 <div class="container-fluid mt-4">
     <div class="row">
@@ -55,10 +21,11 @@
                 <li class="nav-item"><a href="{% url 'about' %}" class="nav-link text-dark">📝 Évaluations</a></li>
                 <li class="nav-item"><a href="{% url 'forum' %}" class="nav-link text-dark">💬 Forums</a></li>
                 <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link text-dark">📩 Messages</a></li>
-                <li class="nav-item"><a href="{% url 'bibliotheque' %}" class="nav-link text-dark">📖 Bibliothèque</a></li>
+                <li class="nav-item"><a href="" class="nav-link text-dark">📖 Bibliothèque</a></li>
+                <li class="nav-item"><a href="{% url 'emploidutemps'  %}" class="nav-link text-dark">📅 Emploi du Temps</a></li>
                 
-                <li class="nav-item"><a href="{% url 'clubs' %}" class="nav-link text-dark">🏅 Clubs</a></li>
-                <li class="nav-item"><a href="{% url 'evenements' %}" class="nav-link text-dark">🎉 Événements</a></li>
+                <li class="nav-item"><a href="{% url 'club_list' %}" class="nav-link text-dark">🏅 Clubs</a></li>
+                <li class="nav-item"><a href="{% url 'evenement_list' %}" class="nav-link text-dark">🎉 Événements</a></li>
             </ul>
         </nav>
 
@@ -113,76 +80,19 @@
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-sm border-light">
                         <div class="card-header bg-info text-white">📖 Bibliothèque</div>
-                        <div class="card-body">
-                            {% if livres %}
-                                <ul class="list-group">
-                                    {% for livre in livres %}
-                                        <li class="list-group-item">
-                                            {{ livre.titre }} - {{ livre.auteur }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">Aucun livre disponible.</p>
-                            {% endif %}
+                        
                         </div>
-=======
-    <!-- Header Section -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Bienvenue sur eLearning</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="", style="font-size: 30px;">L'application pour se parfaire en tant qu'étudiant!</a></li>
-                        </ol>
-                    </nav>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Main Content Section -->
-    <div class="container mt-8" style="margin: 105px 80px 30px 80px;">
-        <div class="row justify-content-center">
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm rounded-lg border-light">
-                    <img src="{% static 'img/image-1.png' %}" class="card-img-top" alt="Student">
-                    <div class="card-body">
-                        <a href="{% url 'login' %}" class="btn btn-primary w-100">Accéder au site en tant qu'étudiant</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm rounded-lg border-light">
-                    <img src="{% static 'img/image-2.png' %}" class="card-img-top" alt="Teacher">
-                    <div class="card-body">
-                        <a href="{% url 'login' %}" class="btn btn-primary w-100">Accéder au site en tant qu'enseignant</a>
->>>>>>> 1a5b6e875ab7b65a5918042935abf5034a114031
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col-md-4 mb-4">
-                <div class="card shadow-sm rounded-lg border-light">
-                    <img src="{% static 'img/image-3.png' %}" class="card-img-top" alt="Admin">
-                    <div class="card-body">
-                        <a href="#" class="btn btn-primary w-100">Accéder au site en tant que visiteur</a>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-    </div>
-
-<<<<<<< HEAD
                 <!-- Emploi du Temps -->
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-sm border-light">
                         <div class="card-header bg-danger text-white">📅 Emploi du Temps</div>
                         <div class="card-body">
-                            {% if emploi_temps %}
+                            {% if emplois %}
                                 <ul class="list-group">
-                                    {% for cours in emploi_temps %}
+                                    {% for cours in emplois %}
                                         <li class="list-group-item">
                                             {{ cours.nom }} - {{ cours.horaire }}
                                         </li>
@@ -191,207 +101,6 @@
                             {% else %}
                                 <p class="text-muted">Aucun emploi du temps défini.</p>
                             {% endif %}
-=======
-
-        <!-- About Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
-                        <div class="position-relative h-100">
-                            <img class="img-fluid position-absolute w-100 h-100" src="{% static 'img/about.jpg' %}" alt="" style="object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
-                        <h1 class="mb-4">Welcome to eLEARNING</h1>
-                        <p class="mb-4">eLearning est une plateforme éducative en ligne conçue pour offrir des cours de haute qualité aux étudiants du monde entier. Notre mission est de rendre l'éducation accessible à tous, peu importe où ils se trouvent.</p>
-                        <p class="mb-4">Avec eLearning, vous pouvez apprendre à votre propre rythme, suivre des cours dispensés par des instructeurs qualifiés et obtenir des certificats reconnus internationalement. Rejoignez-nous et commencez votre parcours d'apprentissage dès aujourd'hui.</p>
-                        <div class="row gy-2 gx-4 mb-4">
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                            </div>
-                        </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About End -->
-
-
-
-        <!-- bibliotheque presnetation start -->
-          <!-- Courses Start -->
-   
-        <div class="container" style="margin-top: 80px;">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Bibliotheque</h6>
-                <h1 class="mb-5">Des livres à votre disposition !</h1>
-            </div>
-            
-            <div class="row g-4 justify-content-center">
-                
-            <div class="col-lg-2 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="course-item bg-light">
-                    <div class="position-relative overflow-hidden">
-                        <img class="img-fluid" src="{% static 'img/l3.png' %}" alt="">
-                    </div>
-                    <div class="text-center p-4 pb-0">
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small>(123)</small>
-                        </div>
-                        <h5 class="mb-4">Les voix dans le vent</h5>
-                    </div>
-                </div>
-            </div>
-                <div class="col-lg-2 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src="{% static 'img/l1.png' %}" alt="">
-                        </div>
-                        <div class="text-center p-4 pb-0">
-                            <div class="mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small>(123)</small>
-                            </div>
-                            <h5 class="mb-4">L'etranger d'Albert Camus</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src="{% static 'img/l2.png' %}" alt="">
-                        </div>
-                        <div class="text-center p-4 pb-0">
-                            <div class="mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small>(123)</small>
-                            </div>
-                            <h5 class="mb-4">Le vieux nègre et la médaille</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src="{% static 'img/l3.png' %}" alt="">
-                        </div>
-                        <div class="text-center p-4 pb-0">
-                            <div class="mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small>(123)</small>
-                            </div>
-                            <h5 class="mb-4">Les voix dans le vent</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <a href="#" class="btn btn-primary py-3 px-5">Voir Plus</a>
-            </div>
-    
-    </div>
-    <!-- Bibliotheque presnetation End -->
-
-
-
-
-    <!-- footer -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Quick Links</h4>
-                    <a class="btn btn-link" href="{% url 'about' %}">About Us</a>
-                    <a class="btn btn-link" href="{% url 'contact' %}">Contact Us</a>
-                    <a class="btn btn-link" href="#">Privacy Policy</a>
-                    <a class="btn btn-link" href="#">Terms & Conditions</a>
-                    <a class="btn btn-link" href="#">FAQs</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Contact</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Gallery</h4>
-                    <div class="row g-2 pt-2">
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="{% static 'img/course-1.jpg' %}" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="{% static 'img/course-2.jpg' %}" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="{% static 'img/course-3.jpg' %}" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Newsletter</h4>
-                    <p>Abonnez-vous pour recevoir les dernières mises à jour et offres.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="email" placeholder="Votre email" required>
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">S'abonner</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Mon site</a>, Tous droits réservés.
-                        Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="#">Home</a>
-                            <a href="#">Cookies</a>
-                            <a href="#">Help</a>
-                            <a href="#">FQAs</a>
->>>>>>> 1a5b6e875ab7b65a5918042935abf5034a114031
                         </div>
                     </div>
                 </div>
@@ -440,51 +149,6 @@
             </div>
         </main>
     </div>
-    <!-- Footer End -->
+</div>
 
-<<<<<<< HEAD
 {% endblock %}
-=======
-    <style>
-    .page-header {
-        background: linear-gradient(rgba(24, 29, 56, .7), rgba(24, 29, 56, .7)), url("{% static 'img/image-4.png' %}");
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-    .card-header {
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    .card-body ul {
-        padding-left: 0;
-    }
-
-    .card-body ul li {
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-    }
-
-    .card-body h6 {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .btn-primary {
-        background-color: #06BBCC;
-        border-color: #06BBCC;
-    }
-
-    .btn-primary:hover {
-        background-color: #05a9b9;
-        border-color: #05a9b9;
-    }
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
->>>>>>> 1a5b6e875ab7b65a5918042935abf5034a114031

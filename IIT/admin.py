@@ -95,26 +95,23 @@ _register(Reclamation, ReclamationAdmin)
 
 # Admin pour le modèle Cours
 class CoursAdmin(admin.ModelAdmin):
-    list_display = ('titre', 'heures', 'credits', 'created_at')
+    list_display = ('titre', 'group', 'heures', 'credits', 'statut', 'created_at', 'last_updated_at')
     list_display_links = ['titre']
-    list_filter = ('credits',)
-    search_fields = ('titre',)
+    list_filter = ('credits', 'group', 'statut')
+    search_fields = ('titre', 'description')
     ordering = ['titre', 'credits']
     list_per_page = 10
     date_hierarchy = 'created_at'
+   
+
     fieldsets = [
         (
             'Infos',
             {
-                'fields': ['titre', 'heures', 'credits'],
+                'fields': ['titre', 'group', 'heures', 'credits', 'description', 'contenu', 'video_url'],
             },
         ),
-        (
-            'Standards',
-            {
-                'fields': ['created_at', ]
-            }
-        ),
+       
     ]
 
     def active(self, request, queryset):
@@ -127,8 +124,7 @@ class CoursAdmin(admin.ModelAdmin):
         self.message_user(request, 'La sélection a été désactivée avec succès')
     desactive.short_description = 'Désactiver'
 
-
-_register(Cours, CoursAdmin)
+admin.site.register(Cours, CoursAdmin)
 
 # Admin pour le modèle Salle
 class SalleAdmin(admin.ModelAdmin):

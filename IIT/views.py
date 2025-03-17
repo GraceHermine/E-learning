@@ -1,14 +1,14 @@
-from collections import defaultdict
 from datetime import date
 from django.db import models
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.shortcuts import get_object_or_404, render,redirect
 from IIT.models import Cours,Forum,ChatMessage,Evaluation,Note,Reclamation, User
 from administration.models import Livre
 from activitees.models import Club,Evenement
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from administration.models import EnseignantB
+from .models import Etudiant
 
 # Create your views here.
 # def error(request):
@@ -195,6 +195,14 @@ def forum_detail(request, id):
 
 
 
+
+
+
+
+# login
+
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -202,6 +210,20 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            try:
+                etudiant = Etudiant.objects.get(user=user)
+                if etudiant.matricule.startswith('EtuIIT-'):
+                    return redirect('StudentHome')
+            except Etudiant.DoesNotExist:
+                pass
+
+            try:
+                enseignant = EnseignantB.objects.get(user=user)
+                if enseignant.matricule.startswith('EnsIIT-'):
+                    return redirect('enseignanthomepage')
+            except EnseignantB.DoesNotExist:
+                pass
+
             return redirect('index')
         else:
             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
@@ -210,4 +232,3 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
-

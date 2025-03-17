@@ -62,5 +62,5 @@ def emploi_du_temps_view(request):
     }
     
     # return render(request, 'administration/emploi_du_temps.html', context)
-    return render(request, 'index2.html', context)
+    return render(request, 'emploidutemps.html', context)
 

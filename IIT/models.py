@@ -92,10 +92,10 @@ class Cours(models.Model):
     
 
     statut = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.titre
 
 
