@@ -1,5 +1,5 @@
+<!-- base.html -->
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -36,8 +36,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/style_chat.css' %}" rel="stylesheet">
 
-    {% block style %}
-    {% endblock style %}
+    
 </head>
 
 <body>
@@ -64,17 +63,15 @@
                 <a href="{% url 'cours' %}" class="nav-item nav-link">Cours</a>
                 <a href="{% url 'chat' %}" class="nav-item nav-link">Chat</a>
                 <a href="{% url 'forum' %}" class="nav-item nav-link">Forum</a>
-                
-                
+                               
             </div>
             
+
         </div>
     </nav>
     <!-- Navbar End -->
 
-    {% block content %}
-    <!-- Contenu des pages -->
-    {% endblock content %}
+    
 
     <!-- Footer Start -->
     

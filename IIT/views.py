@@ -1,6 +1,7 @@
 from collections import defaultdict
 from datetime import date
 from django.db import models
+
 from django.shortcuts import get_object_or_404, render,redirect
 from IIT.models import Cours,Forum,ChatMessage,Evaluation,Note,Reclamation, User
 from administration.models import Livre
@@ -26,6 +27,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
+
     courses = Cours.objects.all()
     forums = Forum.objects.all()
     evaluations = Evaluation.objects.all()
@@ -44,29 +46,28 @@ def index(request):
         # 'emploi_temps': emploi_temps,
         'clubs': clubs,
         'evenements': evenements,
+
     }
     return render(request, 'index.html', datas)
 
 def cours(request):
+
     courses = Cours.objects.all().order_by('-created_at')
     datas = {
         'courses': courses,
     }
-
     return render(request, 'courses.html', datas)
 
-
 def about(request):
-
     datas = {
-
+        'active_page': 'about'  # Ajoutez cette ligne pour indiquer la page active
     }
-
     return render(request, 'about.html', datas)
 
 
 
 def forum_view(request):
+
     forums = Forum.objects.all().order_by('-date_creation') # Récupérer tous les forums
     return render(request, 'forum.html', {'forums': forums})
 
@@ -181,3 +182,4 @@ def forum_detail(request, id):
     }
 
     return render(request, 'forums_detail.html', datas)
+

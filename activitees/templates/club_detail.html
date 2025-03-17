@@ -1,0 +1,20 @@
+<!-- activitees/templates/club_detail.html -->
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card card-detail shadow-sm rounded-lg border-light">
+                <div class="card-body text-center">
+                    <h2 class="card-title text-primary">{{ club.nom }}</h2>
+                    <p class="card-text"><strong>Description:</strong> {{ club.description }}</p>
+                    <p class="card-text"><strong>Statut:</strong> {{ club.statut }}</p>
+                    <p class="card-text"><strong>Créé le:</strong> {{ club.created_at }}</p>
+                    <p class="card-text"><strong>Dernière mise à jour:</strong> {{ club.last_updated_at }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
