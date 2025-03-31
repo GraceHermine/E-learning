@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('IIT.urls')),
     path('administration', include('administration.urls')),
+    path('api/', include('API.urls')),
+    path('activitees/',include('activitees.urls')),
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
