@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Profil étudiant -->
+        <div class="col-md-3">
+            <div class="card shadow-sm rounded-lg border-light">
+                <img src="{{ user.profile_picture.url }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Profile Picture">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ user.username }}</h5>
+                    <p class="card-text text-muted">{{ user.email }}</p>
+                    <p class="text-muted mb-0"><strong>Étudiant</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenu principal -->
+        <div class="col-md-9">
+            <div class="row">
+                <!-- Cours récents -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm rounded-lg border-light">
+                        <div class="container mt-5">
+                            <h1>Liste des Cours</h1>
+                            {% if courses %}
+                                <ul>
+                                    {% for course in courses %}
+                                        <li>{{ course.title }}</li> <!-- Assure-toi que 'title' est un champ de ton modèle -->
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>Aucun cours disponible.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages récents -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm rounded-lg border-light">
+                        <div class="card-header bg-warning text-dark">Messages Récents</div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <!-- Forum consulté récemment -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm rounded-lg border-light">
+                        <div class="card-header bg-success text-white">Forum Consulté</div>
+                        <ul class="list-group list-group-flush">
+                           
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Évaluations récentes et à venir -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm rounded-lg border-light">
+                        <div class="card-header bg-dark text-white">Évaluations</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Barre latérale -->
+        <nav class="col-md-3 bg-light sidebar py-4 rounded-lg shadow-sm">
+            <div class="text-center">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Photo de profil">
+                {% else %}
+                    <img src="https://via.placeholder.com/120" class="rounded-circle mb-3" alt="Photo de profil">
+                {% endif %}
+                <h5 class="text-dark">{{ user.username }}</h5>
+                <p class="text-muted">{{ user.email }}</p>
+                <p class="text-primary"><strong>Étudiant</strong></p>
+            </div>
+            <hr>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="{% url 'cours' %}" class="nav-link text-dark">📚 Mes Cours</a></li>
+                <li class="nav-item"><a href="{% url 'about' %}" class="nav-link text-dark">📝 Évaluations</a></li>
+                <li class="nav-item"><a href="{% url 'forum' %}" class="nav-link text-dark">💬 Forums</a></li>
+                <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link text-dark">📩 Messages</a></li>
+                <li class="nav-item"><a href="{% url 'bibliotheque' %}" class="nav-link text-dark">📖 Bibliotheque</a></li>
+               
+                
+                <li class="nav-item"><a href="{% url 'club_list' %}" class="nav-link text-dark">🏅 Clubs</a></li>
+                <li class="nav-item"><a href="{% url 'evenement_list' %}" class="nav-link text-dark">🎉 Événements</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main class="col-md-9">
+            <div class="row">
+                <!-- Cours -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-primary text-white">📚 Mes Cours</div>
+                        <div class="card-body">
+                            {% if courses %}
+                                <ul class="list-group">
+                                    {% for course in courses %}
+                                        <li class="list-group-item">
+                                            {{ course.titre }} 
+                                            <span class="badge bg-secondary">{{ course.credits }} crédits</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucun cours disponible.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Messages récents -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-warning text-dark">📩 Messages Récents</div>
+                        <div class="card-body">
+                            {% if messages %}
+                                <ul class="list-group">
+                                    {% for message in messages %}
+                                        <li class="list-group-item">
+                                            {{ message.message }} 
+                                            <small class="text-muted">({{ message.created_at }})</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucun message pour l'instant.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Bibliothèque -->
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-info text-white">📖 Bibliothèque</div>
+                        <div class="card-body">
+                            {% if livres %}
+                                <ul class="list-group">
+                                    {% for livre in livres %}
+                                        <li class="list-group-item">
+                                            {{ livre.titre }} - {{ livre.auteur }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Aucun livre disponible.</p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div> 
+            
+            </div>
+        </main>
+        </div>
+                   
+    </div>
+
+
+
+{% endblock %}

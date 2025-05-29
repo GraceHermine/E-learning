@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">📊 Mes Évaluations</h2>
+    
+    <div class="row">
+        {% for eval in evaluations %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-{% if eval.status == 'En cours' %}warning{% elif eval.status == 'Terminée' %}success{% else %}primary{% endif %} text-white">
+                    <h5 class="mb-0">{{ eval.cours.titre }} - {{ eval.type_evaluation }}</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>📅 Date :</strong> {{ eval.date|date:"d/m/Y" }} - 🕒 {{ eval.duree }} min</p>
+                    <p><strong>📝 Statut :</strong> 
+                        <span class="badge bg-{% if eval.status == 'En cours' %}warning{% elif eval.status == 'Terminée' %}success{% else %}secondary{% endif %}">
+                            {{ eval.status }}
+                        </span>
+                    </p>
+                    
+                    {% if eval.status == "Terminée" %}
+                    <div class="progress mt-3">
+                        <div class="progress-bar bg-success" role="progressbar"  aria-valuenow="{{ eval.score }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ eval.score }}%
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'evaluation_detail' eval.id %}" class="btn btn-outline-primary btn-sm">
+                        {% if eval.status == 'En cours' %}
+                            🔍 Faire l'évaluation
+                        {% elif eval.status == 'Terminée' %}
+                            🔍 Voir la note
+                        {% else %}
+                            🔍 Voir les détails
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Aucune évaluation prévue.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

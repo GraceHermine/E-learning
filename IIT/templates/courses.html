@@ -1,0 +1,119 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">📚 Mes Cours</h2>
+    
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">{{ course.titre }}</h5>
+                    <p class="card-text text-muted">{{ course.description|truncatewords:20 }}</p>
+<<<<<<< HEAD
+                    <button class="btn btn-primary btn-sm btn-block" onclick="loadCourse('{{ course.video_url }}', '{{ course.titre }}', '{{ course.contenu }}')">
+=======
+                    <button class="btn btn-primary btn-sm btn-block" onclick="loadCourse(' {{ course.titre }}', '{{ course.contenu }}')">
+>>>>>>> ff020bd (Ajout des fichiers et Maj diverses)
+                        🎥 Voir le cours
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Aucun cours disponible.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <!-- Section de lecture du cours -->
+    <div id="course-viewer" class="mt-5 d-none">
+        <h3 class="text-center text-secondary" id="course-title"></h3>
+        <div class="text-center">
+            <iframe id="course-video" class="rounded-lg shadow-lg" width="80%" height="400" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="mt-4 p-3 bg-light rounded-lg shadow-sm">
+            <h4 class="text-dark">📖 Contenu du cours</h4>
+            <p id="course-content" class="text-muted"></p>
+=======
+
+    <!-- Categories Start -->
+    <div class="container-xxl py-5 category">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Categories</h6>
+                <h1 class="mb-5">Courses Categories</h1>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-7 col-md-6">
+                    <div class="row g-3">
+                        <div class="col-lg-12 col-md-12 wow zoomIn" data-wow-delay="0.1s">
+                            <a class="position-relative d-block overflow-hidden" href="">
+                                <img class="img-fluid" src="{% static 'img/image-1.png' %}" alt="">
+                                <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                    <h5 class="m-0">Web Design</h5>
+                                    <small class="text-primary">49 Courses</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.3s">
+                            <a class="position-relative d-block overflow-hidden" href="">
+                                <img class="img-fluid" src="{% static 'img/cat-2.jpg' %}" alt="">
+                                <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                    <h5 class="m-0">Graphic Design</h5>
+                                    <small class="text-primary">49 Courses</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.5s">
+                            <a class="position-relative d-block overflow-hidden" href="">
+                                <img class="img-fluid" src="{% static 'img/cat-3.jpg' %}" alt="">
+                                <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                    <h5 class="m-0">Video Editing</h5>
+                                    <small class="text-primary">49 Courses</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;">
+                    <a class="position-relative d-block h-100 overflow-hidden" href="">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{% static 'img/cat-4.jpg' %}" alt="" style="object-fit: cover;">
+                        <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin:  1px;">
+                            <h5 class="m-0">Online Marketing</h5>
+                            <small class="text-primary">49 Courses</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+>>>>>>> 1a5b6e875ab7b65a5918042935abf5034a114031
+=======
+    <!-- Section de lecture du cours -->
+    <div id="course-viewer" class="mt-5 d-none">
+        <h3 class="text-center text-secondary" id="course-title"></h3>
+        <!-- <div class="text-center">
+            <iframe id="course-video" class="rounded-lg shadow-lg" width="80%" height="400" frameborder="0" allowfullscreen></iframe>
+        </div> -->
+        <div class="mt-4 p-3 bg-light rounded-lg shadow-sm">
+            <h4 class="text-dark">📖 Contenu du cours</h4>
+            <p id="course-content" class="text-muted"></p>
+
+>>>>>>> ff020bd (Ajout des fichiers et Maj diverses)
+        </div>
+    </div>
+</div>
+
+<script>
+function loadCourse(videoUrl, title, content) {
+    document.getElementById('course-title').innerText = title;
+    document.getElementById('course-video').src = videoUrl;
+    document.getElementById('course-content').innerHTML = content;
+    document.getElementById('course-viewer').classList.remove('d-none');
+}
+</script>
+
+{% endblock %}

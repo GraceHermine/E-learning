@@ -1,0 +1,19 @@
+{% extends 'baseAss/base.html' %}
+{% block content %}
+<!-- Clubs -->
+<div class="container justify-content-center my-5"></div>
+    <div class="col-md-6"></div>
+        <div class="card shadow-sm rounded-lg border-light"></div>
+            <div class="card-header bg-warning text-dark">Clubs</div>
+            <div class="card-body"></div>
+                <ul class="list-group list-group-flush"></ul>
+                    {% for club in clubs %}
+                        <li class="list-group-item">{{ club.nom }} - {{ club.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
